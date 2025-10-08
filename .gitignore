@@ -1,0 +1,3 @@
+venv
+*.pkl
+alzheimers_model.pkl
