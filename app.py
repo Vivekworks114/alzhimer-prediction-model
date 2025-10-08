@@ -3,22 +3,34 @@ import pandas as pd
 import joblib
 import requests
 
+
+st.set_page_config(
+    page_icon="🧠",
+    layout="centered",
+    menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': None
+    }
+)
+
+# Hide deploy button and menu
+hide_menu_style = """
+    <style>
+    .stBaseButton-header {display:none;}
+    [data-testid="stBaseButton-header"] {display:none !important;}
+    </style>
+"""
+st.markdown(hide_menu_style, unsafe_allow_html=True)
+
 # --- Load model and encoders ---
 model = joblib.load("alzheimers_model.pkl")
 label_encoders = joblib.load("label_encoders.pkl")
 target_encoder = joblib.load("target_encoder.pkl")
 
+
 st.title("🧠 Alzheimer's Disease Prediction")
 st.write("Provide the following patient details:")
-
-
-st.write("Target classes:", target_encoder.classes_)
-if st.sidebar.checkbox("Show Model Info"):
-    st.sidebar.write("**Model Classes:**", model.classes_)
-    st.sidebar.write("**Target Classes:**", target_encoder.classes_)
-    st.sidebar.write("**Features:**", model.n_features_in_)
-    st.sidebar.write("**Encoded Features:**", list(label_encoders.keys()))
-
 
 
 # --- Get query params using new Streamlit API ---
